@@ -1,0 +1,36 @@
+SparkContext: every spark application has a driver program.
+	could be:
+		the PySpark/Scala shell: a script, a main function (Java/Scala)
+	this program consists of instructions to Spark, load data into RDDs, perform 
+		operations on RDDs
+	driver programs use a SparkContext to communicate with the Spark cluster
+	2 phases: 
+		initial setup: happens when you launch the program
+			This is a plug and play component: Mesos, YARN or Spark Standalone
+		job run: a job run is initiated whenever the program has a processing task, actions
+
+
+YarnScheduler: cluster manager, Spark needs a separate cluster manager to manage resources
+	across the cluster, distributing processes across the nodes
+	
+	When the driver program starts, it contacts the cluster manager through the SparkContext.
+	The cluster manager in turn launches Java processes (executors) on several nodes in 
+	the cluster. Once the executors are launched, they register themselves with the driver
+	program. Now the driver program is ready for processing user instructions. (Done Initial
+	Setup)
+
+
+A job is initited when there is an anction on an RDD. When this happens, SparkContext passes 
+	the user instructions on to a Scheduler. 
+	DAGScheduler: breaks down the job into smaller units of work. 
+		Job -> Stages -> Tasks. Stages and Tasks form a DAG. This is a standard way to 
+		represent a workflow. 
+
+Each Task is assigned to an executor by the Task scheduler. The executors run the tasks and send updates back to the driver program. 
+
+
+
+
+
+
+
